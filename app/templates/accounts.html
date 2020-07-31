@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Username</th>
+        <th scope="col">Password</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for account in accounts %}
+    <tr>
+        <td><a href="view/{{account.id}}">{{ account.Username }}</a></td>
+        <td>{{ account.Password }}</td>
+        <td>{{ account.First_Name }}</td>
+        <td>{{ account.Last_Name }}</td>
+        <td>{{ account.Email }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
