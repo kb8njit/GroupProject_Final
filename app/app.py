@@ -18,7 +18,7 @@ mysql.init_app(app)
 
 
 @app.route('/', methods=['GET'])
-def home():
+def login_page():
     return render_template('login.html')
 
 @app.route('/accounts', methods=['GET'])
