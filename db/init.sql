@@ -1,7 +1,7 @@
 CREATE DATABASE LoginData;
 use LoginData;
 
-DROP TABLE if exists LoginData;
+DROP TABLE if exists Accounts;
 
 CREATE TABLE IF NOT EXISTS Accounts (
     `id` INT AUTO_INCREMENT,
@@ -13,4 +13,6 @@ CREATE TABLE IF NOT EXISTS Accounts (
     PRIMARY KEY (`id`)
 );
 INSERT INTO Accounts (Username, Password, First_Name, Last_Name, Email) VALUES
-('test', 'testpw', 'testfn', 'testln', 'testem@test.com');
+    ('test', 'testpw', 'testfn', 'testln', 'testem@test.com'),
+    ('KBlackledge', 'Password', 'Kelly', 'Blackledge', 'kb8@njit.edu');
+

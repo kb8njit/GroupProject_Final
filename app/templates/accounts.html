@@ -11,13 +11,13 @@
     </tr>
     </thead>
     <tbody>
-    {% for account in accounts %}
+    {% for Account in Accounts %}
     <tr>
-        <td><a href="view/{{account.id}}">{{ account.Username }}</a></td>
-        <td>{{ account.Password }}</td>
-        <td>{{ account.First_Name }}</td>
-        <td>{{ account.Last_Name }}</td>
-        <td>{{ account.Email }}</td>
+        <td><a href="view/{{Account.id}}">{{ Account.Username }}</a></td>
+        <td>{{ Account.Password }}</td>
+        <td>{{ Account.First_Name }}</td>
+        <td>{{ Account.Last_Name }}</td>
+        <td>{{ Account.Email }}</td>
     </tr>
     {% endfor %}
     </tbody>

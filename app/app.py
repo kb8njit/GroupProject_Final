@@ -17,9 +17,24 @@ app.config['MYSQL_DATABASE_DB'] = 'LoginData'
 mysql.init_app(app)
 
 
-@app.route('/', methods=['GET', 'POST'])
-def login():
+@app.route('/', methods=['GET'])
+def home():
     return render_template('login.html')
+
+@app.route('/accounts', methods=['GET'])
+def accounts():
+    user = {'username': 'Kelly'}
+    cursor = mysql.get_db().cursor()
+    cursor.execute('SELECT * FROM Accounts')
+    result = cursor.fetchall()
+    return render_template('accounts.html', title='Accounts', user=user, Accounts=result)
+
+@app.route('/register', methods=['GET'])
+def register_page():
+    return render_template('register.html')
+
+
+
 
 
 if __name__ == '__main__':
