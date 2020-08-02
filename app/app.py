@@ -33,6 +33,17 @@ def homepage():
     return render_template('login.html', title='Login Page')
 
 
+@app.route('/profile', methods=['GET'])
+def profile():
+    if name:
+        user = {'Username': name}
+        cursor = mysql.get_db().cursor()
+        cursor.execute('SELECT * FROM Accounts')
+        return render_template('profile.html', title='User Profile', user=user)
+    else:
+        return redirect(url_for("login"))
+
+
 @app.route('/login', methods=['POST'])
 def login():
     inputData = (request.form.get('Email'), request.form.get('Password'))
