@@ -3,21 +3,21 @@
 <table class="table">
     <thead>
     <tr>
-        <th scope="col">Username</th>
-        <th scope="col">Password</th>
         <th scope="col">First Name</th>
         <th scope="col">Last Name</th>
         <th scope="col">Email</th>
+        <th scope="col">Password</th>
+        <th scope="col">Verified</th>
     </tr>
     </thead>
     <tbody>
     {% for Account in Accounts %}
     <tr>
-        <td>{{ Account.Username }}</td>
-        <td>{{ Account.Password }}</td>
         <td>{{ Account.First_Name }}</td>
         <td>{{ Account.Last_Name }}</td>
         <td>{{ Account.Email }}</td>
+        <td>{{ Account.Password }}</td>
+        <td>{{ Account.Verified }}</td>
     </tr>
     {% endfor %}
     </tbody>
