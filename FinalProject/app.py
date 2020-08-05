@@ -107,10 +107,10 @@ def register():
 @app.route('/activate/<int:new_id>', methods=['GET'])
 def activate(new_id):
     cursor = mysql.get_db().cursor()
-    sql_update_query = """UPDATE Accounts a SET a.verified = 1 WHERE a.id = %s"""
+    sql_update_query = """UPDATE Accounts a SET a.Verified = 1 WHERE a.id = %s"""
     cursor.execute(sql_update_query, new_id)
     mysql.get_db().commit()
-    return render_template('index.html', title='Login',
+    return render_template('login.html', title='Login',
                            status='Your account has been successfully verified.  Please login.')
 
 
