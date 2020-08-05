@@ -36,24 +36,36 @@
     <link href="signandregister.css" rel="stylesheet">
   </head>
   <body class="text-center">
-  <form class="form-signin" action="/register" method="post">
+  <form class="form-login" action="/register" method="post">
   <h1 class="h3 mb-3 font-weight-normal">Please Register</h1>
 
-  <label for="First_Name" class="sr-only">First Name</label>
-        <input type="text" id="First_Name" class="form-control" placeholder="First Name" required autofocus>
+     <div class="form-label-group">
+         <label for="inputFN" class="sr-only">First Name</label>
+            <input type="text" id="inputFN" class="form-control" name="inputFN" placeholder="First Name" required
+                   autofocus>
+     </div>
 
-  <label for="Last_Name" class="sr-only">Last Name</label>
-        <input type="text" id="Last_Name" class="form-control" placeholder="Last Name" required autofocus>
+     <div class="form-label-group">
+         <label for="inputLN" class="sr-only">Last Name</label>
+            <input type="text" id="inputLN" class="form-control" name="inputLN" placeholder="Last Name" required
+                   autofocus>
+     </div>
 
-  <label for="Email" class="sr-only">Email address</label>
-        <input type="email" id="Email" class="form-control" placeholder="Email address" required autofocus>
+      <div class="form-label-group">
+          <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="email" id="inputEmail" class="form-control" name="inputEmail" placeholder="Email address"
+                   required autofocus>
+      </div>
 
-  <label for="Password" class="sr-only">Password</label>
-        <input type="password" id="Password" class="form-control" placeholder="Password" required>
+      <div class="form-label-group">
+        <label for="InputPassword" class="sr-only">Password</label>
+            <input type="password" id="InputPassword" class="form-control" name="inputPassword" placeholder="Password"
+                   required>
+      </div>
 
   <div style="text-align: center">
-      <p class="mb-1 font-weight-light" style="color: red">{{ response }}</p>
-      <p class="mb-1 font-weight-light" style="color: limegreen">{{ response_s }}</p>
+      <p class="mb-1 font-weight-light" style="color: orangered">{{ response }}</p>
+      <p class="mb-1 font-weight-light" style="color: blue">{{ response_s }}</p>
   </div>
 
   <div class="checkbox mb-3">
@@ -62,8 +74,7 @@
     </label>
   </div>
   <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-
-        <div class="msg">{{ msg }}</div>
+    <a href="/" class="card-link btn btn-lg btn-primary btn-block">Back to Login</a>
 
 <!--    Please check email to verify account-->
 
