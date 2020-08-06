@@ -2,11 +2,11 @@ FROM python:3.8
 
 EXPOSE 5000
 
-WORKDIR /calendar_app
+WORKDIR /FinalProject
 
-COPY requirements.txt /calendar_app
+COPY requirements.txt /FinalProject
 RUN pip install  -r requirements.txt --upgrade pip
 
-COPY . /calendar_app
+COPY . /FinalProject
 
 CMD python app.py

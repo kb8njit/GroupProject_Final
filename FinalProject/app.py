@@ -33,6 +33,27 @@ def homepage():
     return render_template('login.html', title='Login Page')
 
 
+@app.route('/', methods=['POST'])
+def login():
+    inputData = (request.form.get('inputEmail'), request.form.get('inputPassword'))
+    cursor = mysql.get_db().cursor()
+    query = """SELECT * FROM Accounts WHERE Email = %s AND Password = %s"""
+    cursor.execute(query, inputData)
+    result = cursor.fetchall()
+    count = cursor.rowcount
+
+    if count == 0:
+        return render_template('login.html', title='Login Page', response='Incorrect Email and/or Password.')
+    else:
+        if result[0]['Verified'] == 1:
+            global name
+            name = result[0]['First_Name'] + ' ' + result[0]['Last_Name']
+            return redirect('/profile', code=302)
+        else:
+            return render_template('login.html', title='Login Page', response='Please check your email'
+                                                                              ' to verify account.')
+
+
 @app.route('/profile', methods=['GET'])
 def profile():
     if name:
@@ -44,27 +65,6 @@ def profile():
         return redirect(url_for("login"))
 
 
-@app.route('/login', methods=['POST'])
-def login():
-    inputData = (request.form.get('Email'), request.form.get('Password'))
-    cursor = mysql.get_db().cursor()
-    query = """SELECT * FROM Accounts WHERE Email = %s AND Password = %s"""
-    cursor.execute(query, inputData)
-    result = cursor.fetchall()
-    count = cursor.rowcount
-
-    if count == 0:
-        return render_template('login.html', title='Login Page', response='Incorrect Email and/or Password.')
-    else:
-        if result[0]['verified'] == 1:
-            global name
-            name = result[0]['First Name'] + ' ' + result[0]['Last Name']
-            return redirect('/profile', code=302)
-        else:
-            return render_template('login.html', title='Login Page', response='Please check your email'
-                                                                              ' to verify account.')
-
-
 @app.route('/register')
 def register_page():
     return render_template('register.html', title='Register')
@@ -72,12 +72,12 @@ def register_page():
 
 @app.route('/register', methods=['POST'])
 def register():
-    inputData = (request.form.get('First_Name'), request.form.get('Last_Name'), request.form.get('Email'),
-                 request.form.get('Password'))
-    email = request.form.get('Email')
+    inputData = (request.form.get('inputFN'), request.form.get('inputLN'), request.form.get('inputEmail'),
+                 request.form.get('inputPassword'))
+    email = request.form.get('inputEmail')
 
     cursor = mysql.get_db().cursor()
-    email_check_query = """SELECT id FROM Accounts where Email = %s"""
+    email_check_query = """SELECT id FROM Accounts where Email=%s"""
     new_input_query = """INSERT INTO Accounts (First_Name, Last_Name, Email, Password, Verified) VALUES (%s, %s, %s, %s, 
     0)"""
     cursor.execute(email_check_query, email)
@@ -93,7 +93,7 @@ def register():
         result = cursor.fetchall()
 
         msg = Message('Please verify your account', recipients=[email])
-        msg.body = ('Please click here to activate you account. '
+        msg.body = ('Please click here to activate your account. '
                     'You will be able to log in once your account has been activated.')
         msg.html = (f'<h1>Verify Account</h1>'
                     f'<p>Please '
@@ -107,10 +107,10 @@ def register():
 @app.route('/activate/<int:new_id>', methods=['GET'])
 def activate(new_id):
     cursor = mysql.get_db().cursor()
-    sql_update_query = """UPDATE Accounts a SET a.verified = 1 WHERE a.id = %s"""
+    sql_update_query = """UPDATE Accounts a SET a.Verified = 1 WHERE a.id = %s"""
     cursor.execute(sql_update_query, new_id)
     mysql.get_db().commit()
-    return render_template('index.html', title='Login',
+    return render_template('login.html', title='Login',
                            status='Your account has been successfully verified.  Please login.')
 
 
@@ -121,6 +121,31 @@ def accounts():
     cursor.execute('SELECT * FROM Accounts')
     result = cursor.fetchall()
     return render_template('accounts.html', title='Accounts', user=user, Accounts=result)
+
+
+@app.route('/calendar')
+def calendar():
+    return render_template('calendar_events.html')
+
+
+@app.route('/calendar-events')
+def calendar_events():
+    conn = None
+    cursor = None
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute(
+            "SELECT id, title, class, UNIX_TIMESTAMP(start_date)*1000 as start, UNIX_TIMESTAMP(end_date)*1000 as end FROM event")
+        rows = cursor.fetchall()
+        resp = jsonify({'success': 1, 'result': rows})
+        resp.status_code = 200
+        return resp
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        conn.close()
 
 
 if __name__ == '__main__':
