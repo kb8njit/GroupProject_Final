@@ -10,7 +10,7 @@ When accessing the homepage you will be directed to login or register.  You will
 Once logged in you will be greeted with a simple profile page.
 
 ### Feature 1: Login/Registration (created by Kelly Blackledge)
-A login process that takes the user to their profile page, as well as a registration that should send an email to the registrant informing them to activate their account.
+A login process that takes the user to their profile page, as well as a registration that should send an email to the registrant informing them to activate their account.  If you are unable to register, please use the "Search Accounts" option to find an email address and password to view the profile page.
 
 ### Feature 2: (created by Monica Nelson)
 A calendar display
